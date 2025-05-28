@@ -1,0 +1,14 @@
+# Dossiers de compilation
+/bin/
+/out/
+/target/
+
+# Bibliothèques externes
+/lib/*.jar
+
+# Fichiers IDE
+/.idea/
+/*.iml
+
+# Fichiers temporaires
+*.log
