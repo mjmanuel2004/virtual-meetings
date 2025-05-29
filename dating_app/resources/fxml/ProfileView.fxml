@@ -8,26 +8,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox fx:id="profileRoot" spacing="15.0" alignment="CENTER_LEFT" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" 
+<VBox fx:id="profileRoot" spacing="15.0" alignment="CENTER_LEFT" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17"
       fx:controller="com.datingapp.client.ui.ProfileController" stylesheets="@../css/styles.css" prefWidth="400">
     <padding>
         <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
     </padding>
-    <Label text="User Profile" styleClass="label-header" alignment="CENTER" VBox.vgrow="NEVER" HBox.hgrow="ALWAYS"/>
-    
+
+    <!-- CORRIGÉ : Supprimé alignment, VBox.vgrow, HBox.hgrow qui ne sont pas valides pour Label -->
+    <Label text="User Profile" styleClass="label-header"/>
+
     <HBox spacing="10" alignment="CENTER_LEFT">
         <Label text="Avatar URL:" minWidth="80"/>
         <TextField fx:id="avatarUrlField" HBox.hgrow="ALWAYS" promptText="Enter image URL (e.g., http://.../image.png)"/>
     </HBox>
-    <Button fx:id="saveAvatarButton" text="Save Avatar URL" onAction="#handleSaveAvatarButtonAction" HBox.alignment="CENTER_RIGHT" maxWidth="Infinity"/>
 
-    <Label text="Bio:" alignment="TOP_LEFT" paddingTop="10"/>
+    <!-- CORRIGÉ : Supprimé HBox.alignment qui n'est pas valide pour Button dans VBox -->
+    <Button fx:id="saveAvatarButton" text="Save Avatar URL" onAction="#handleSaveAvatarButtonAction" maxWidth="Infinity"/>
+
+    <!-- CORRIGÉ : Supprimé alignment et paddingTop qui ne sont pas valides pour Label -->
+    <Label text="Bio:"/>
     <TextArea fx:id="bioTextArea" promptText="Tell us a little about yourself..." wrapText="true" prefRowCount="4" VBox.vgrow="ALWAYS"/>
-    <Button fx:id="saveBioButton" text="Save Bio" onAction="#handleSaveBioButtonAction" HBox.alignment="CENTER_RIGHT" maxWidth="Infinity"/>
-    
+
+    <!-- CORRIGÉ : Supprimé HBox.alignment qui n'est pas valide pour Button dans VBox -->
+    <Button fx:id="saveBioButton" text="Save Bio" onAction="#handleSaveBioButtonAction" maxWidth="Infinity"/>
+
     <Label fx:id="statusLabel" minHeight="20" wrapText="true"/>
 
-    <HBox spacing="10" alignment="CENTER_RIGHT" paddingTop="15">
+    <!-- CORRIGÉ : Supprimé paddingTop qui n'est pas valide pour HBox -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <padding>
+            <Insets top="15"/>
+        </padding>
         <Button fx:id="closeButton" text="Close" onAction="#handleCloseButtonAction" cancelButton="true"/>
     </HBox>
 </VBox>

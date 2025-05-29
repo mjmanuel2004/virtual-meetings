@@ -70,7 +70,7 @@ public class MainClient extends Application {
     public void showRegistrationScreen() {
         cleanupPreviousController();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Registration.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxml/Registration.fxml"));
             Parent root = loader.load();
 
             RegistrationController controller = loader.getController();
@@ -90,7 +90,7 @@ public class MainClient extends Application {
     public void showChatView(String username) {
         cleanupPreviousController();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ChatView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxml/ChatView.fxml"));
             Parent root = loader.load();
 
             ChatController controller = loader.getController();

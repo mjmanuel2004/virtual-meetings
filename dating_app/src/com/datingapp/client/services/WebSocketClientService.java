@@ -1,13 +1,13 @@
 package com.datingapp.client.services;
 
-import javax.websocket.ClientEndpoint;
-import javax.websocket.ContainerProvider;
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
+import jakarta.websocket.ClientEndpoint;
+import jakarta.websocket.ContainerProvider;
+import jakarta.websocket.OnClose;
+import jakarta.websocket.OnError;
+import jakarta.websocket.OnMessage;
+import jakarta.websocket.OnOpen;
+import jakarta.websocket.Session;
+import jakarta.websocket.WebSocketContainer;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class WebSocketClientService {
 
     public WebSocketClientService() {
         // Lire l'adresse du serveur depuis les propriétés système
-        String serverHost = System.getProperty("server.host", "localhost");
+        String serverHost = System.getProperty("server.host", "192.168.1.7");
         String serverPort = System.getProperty("server.port", "8025");
         this.serverUriBase = "ws://" + serverHost + ":" + serverPort + "/websockets/chat/";
 

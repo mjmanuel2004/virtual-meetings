@@ -102,7 +102,7 @@ public class ChatController {
     @FXML
     private void handleProfileButtonAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProfileView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxml/ProfileView.fxml"));
             VBox page = loader.load(); 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Profile");
