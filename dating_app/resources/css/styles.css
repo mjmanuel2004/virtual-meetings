@@ -1,0 +1,173 @@
+/* General Styles */
+.root {
+    -fx-background-color: #2B2B2B; /* Dark grey background */
+    -fx-font-family: "Arial", sans-serif; /* Example font */
+}
+
+.label {
+    -fx-text-fill: #E0E0E0; /* Light grey text for labels */
+    -fx-font-size: 14px;
+}
+
+/* Headings or important labels */
+.label-header {
+    -fx-text-fill: #FFFFFF; /* White text */
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.status-label-error {
+    -fx-text-fill: #FF6B6B; /* Soft red for errors */
+}
+
+.status-label-success {
+    -fx-text-fill: #76FF03; /* Bright green for success */
+}
+
+
+.text-field, .password-field {
+    -fx-background-color: #3C3F41; /* Slightly lighter dark background */
+    -fx-text-fill: #E0E0E0; /* Light text */
+    -fx-prompt-text-fill: #A0A0A0; /* Grey for prompt text */
+    -fx-border-color: #505355; /* Subtle border */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-padding: 8px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #4A90E2; /* Blue border when focused */
+    -fx-background-color: #45494B;
+}
+
+.button {
+    -fx-background-color: #4A90E2; /* Primary action blue */
+    -fx-text-fill: #FFFFFF; /* White text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2); /* Subtle shadow */
+}
+
+.button:hover {
+    -fx-background-color: #357ABD; /* Darker blue on hover */
+}
+
+.button:pressed {
+    -fx-background-color: #2A659A; /* Even darker blue when pressed */
+}
+
+.hyperlink {
+    -fx-text-fill: #4A90E2; /* Blue for hyperlinks */
+    -fx-font-size: 12px;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #66AFFF; /* Lighter blue on hover */
+}
+
+.list-view {
+    -fx-background-color: #3C3F41;
+    -fx-border-color: #505355;
+    -fx-border-radius: 5px;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E0E0E0;
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+}
+
+.list-cell:filled:selected, .list-cell:filled:selected:focused {
+    -fx-background-color: #4A90E2; /* Blue selection */
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #45494B; /* Hover effect for list cells */
+}
+
+/* Specific styling for welcome labels if needed */
+#welcomeLabel { /* Assuming fx:id="welcomeLabel" in ChatView.fxml */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Style for user list in ChatView */
+#userListView .list-cell {
+    -fx-text-fill: #B0BEC5; /* Lighter text for user list */
+}
+#userListView .list-cell:filled:selected {
+     -fx-background-color: #007ACC; 
+     -fx-text-fill: white;
+}
+
+/* Chat Message Cells */
+.chat-list-view .list-cell { /* Target cells only within chatListView if fx:id is chatListView */
+    -fx-background-color: transparent; /* Let the message bubble define color */
+    -fx-padding: 5px 0px; /* Vertical padding between messages */
+}
+
+.message-bubble {
+    -fx-padding: 8px 12px;
+    -fx-background-radius: 15px; /* Rounded corners for bubbles */
+    -fx-max-width: 70%; /* Max width of message bubble */
+}
+
+.message-bubble.sent {
+    -fx-background-color: #007ACC; /* Blue for sent messages */
+    /*setAlignment(Pos.CENTER_RIGHT) in controller handles alignment */
+}
+.message-bubble.sent .message-text-content { /* Target Text within sent bubble */
+    -fx-fill: white;
+}
+ .message-bubble.sent .message-sender { /* Hide sender for own messages or style differently */
+    -fx-font-size: 0px; /* Effectively hide if not removing node */
+}
+
+
+.message-bubble.received {
+    -fx-background-color: #4A4D50; /* Darker grey for received messages */
+     /*setAlignment(Pos.CENTER_LEFT) in controller handles alignment */
+}
+.message-bubble.received .message-text-content {
+    -fx-fill: #E0E0E0;
+}
+ .message-bubble.received .message-sender {
+    -fx-font-weight: bold;
+    -fx-fill: #A0A0A0; /* Color for sender name */
+    -fx-font-size: 11px;
+    -fx-padding: 0 0 3px 0; /* Spacing below sender name */
+}
+
+.message-bubble.system {
+    -fx-background-color: #333333; /* Background for system messages */
+    -fx-padding: 5px 10px;
+    /*setAlignment(Pos.CENTER) in controller handles alignment */
+}
+.message-bubble.system .message-text-content {
+    -fx-fill: #B0BEC5; /* Text color for system messages */
+    -fx-font-style: italic;
+}
+.message-bubble.system .message-sender { /* "System" label */
+    -fx-font-weight: bold;
+    -fx-fill: #B0BEC5;
+    -fx-font-size: 11px;
+}
+
+
+.message-timestamp {
+    -fx-font-size: 10px;
+    -fx-text-fill: #909090; /* Grey for timestamps */
+    -fx-padding: 0 5px; /* Padding around timestamp */
+}
+
+/* Ensure TextFlow inside ListCell stretches if needed, though VBox/HBox preferred for structure */
+.list-cell .text-flow {
+    -fx-padding: 2px;
+}
