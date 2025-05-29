@@ -25,14 +25,14 @@ public class MainServer {
                     serverProperties.load(fsInput);
                     System.out.println("Loaded server properties from file system: " + PROPERTIES_FILE);
                 } catch (IOException ex) {
-                    System.err.println("Warning: Could not load " + PROPERTIES_FILE + 
-                                       " from classpath or file system. Using default values.");
+                    System.err.println("Warning: Could not load " + PROPERTIES_FILE +
+                            " from classpath or file system. Using default values.");
                     // ex.printStackTrace(); // Optionally print stack trace
                 }
             }
         } catch (IOException ex) {
-            System.err.println("Warning: Error attempting to load " + PROPERTIES_FILE + 
-                               ". Using default values.");
+            System.err.println("Warning: Error attempting to load " + PROPERTIES_FILE +
+                    ". Using default values.");
             // ex.printStackTrace();
         }
     }
@@ -61,14 +61,14 @@ public class MainServer {
         // com.datingapp.server.DatabaseUtil.initializeWithProperties(serverProperties);
 
         int serverPort = getIntProperty("server.port", 8025); // Default if not in properties
-        
+
         Server server = new Server("localhost", serverPort, "/websockets", null, ChatServerEndpoint.class);
         try {
             server.start();
             System.out.println("WebSocket server started on ws://localhost:" + serverPort + "/websockets/chat");
             // Example of getting other properties, though DatabaseUtil now loads its own
             System.out.println("DB URL from MainServer (for reference): " + getProperty("db.url", "jdbc:mysql://localhost:3306/dating_app_db_default"));
-            
+
             System.out.println("Press any key to stop the server...");
             System.in.read();
         } catch (Exception e) {

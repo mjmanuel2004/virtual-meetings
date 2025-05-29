@@ -92,7 +92,7 @@ public class ProfileController {
     @FXML
     private void handleSaveAvatarButtonAction(ActionEvent event) {
         String newAvatarUrl = avatarUrlField.getText().trim();
-        if (newAvatarUrl.length() > 512 || (!newAvatarUrl.isEmpty() && !newAvatarUrl.matches("^https?://.*\.(png|jpg|jpeg|gif|webp)$"))) {
+        if (newAvatarUrl.length() > 512 || (!newAvatarUrl.isEmpty() && !newAvatarUrl.matches("^https?://.*\\.(png|jpg|jpeg|gif|webp)$"))) {
              statusLabel.getStyleClass().setAll("label","status-label-error");
              statusLabel.setText("Invalid Avatar URL format, extension, or too long.");
              return;
