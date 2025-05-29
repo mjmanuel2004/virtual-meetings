@@ -1,23 +1,18 @@
 package com.datingapp.client.services;
 
-import jakarta.websocket.ClientEndpoint;
-import jakarta.websocket.ContainerProvider;
-import jakarta.websocket.OnClose;
-import jakarta.websocket.OnError;
-import jakarta.websocket.OnMessage;
-import jakarta.websocket.OnOpen;
-import jakarta.websocket.Session;
-import jakarta.websocket.WebSocketContainer;
+import javax.websocket.ClientEndpoint;
+import javax.websocket.ContainerProvider;
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.function.Consumer;
-
-// Dans WebSocketClientService.java
-// Remplacer la ligne avec serverUriBase par :
 
 @ClientEndpoint
 public class WebSocketClientService {
@@ -44,7 +39,6 @@ public class WebSocketClientService {
         System.out.println("Adresse du serveur mise à jour : " + serverUriBase);
     }
 
-    // Le reste du code reste identique...
     public void connect(String username) {
         if (session == null || !session.isOpen()) {
             try {
@@ -75,5 +69,84 @@ public class WebSocketClientService {
         }
     }
 
-    // Reste du code inchangé...
+    @OnOpen
+    public void onOpen(Session session) {
+        this.session = session;
+        System.out.println("Connecté au serveur WebSocket. ID de session : " + session.getId());
+        messageHandlers.forEach(handler -> handler.accept("SYSTEM_MSG:Connected_Successfully"));
+    }
+
+    @OnMessage
+    public void onMessage(String message, Session session) {
+        System.out.println("Message reçu du serveur : " + message);
+        messageHandlers.forEach(handler -> handler.accept(message));
+    }
+
+    @OnClose
+    public void onClose(Session session) {
+        this.session = null;
+        System.out.println("Déconnecté du serveur WebSocket.");
+        messageHandlers.forEach(handler -> handler.accept("SYSTEM_MSG:Disconnected"));
+    }
+
+    @OnError
+    public void onError(Session session, Throwable throwable) {
+        System.err.println("Erreur WebSocket : " + throwable.getMessage());
+        throwable.printStackTrace();
+        messageHandlers.forEach(handler -> handler.accept("SYSTEM_MSG:Error:" + throwable.getMessage()));
+    }
+
+    // MÉTHODES MANQUANTES - AJOUTÉES ICI
+
+    /**
+     * Envoie un message au serveur
+     */
+    public void sendMessage(String message) {
+        if (session != null && session.isOpen()) {
+            try {
+                session.getBasicRemote().sendText(message);
+                System.out.println("Message envoyé au serveur : " + message);
+            } catch (IOException e) {
+                System.err.println("Erreur lors de l'envoi du message : " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Impossible d'envoyer le message, session inactive.");
+            messageHandlers.forEach(handler -> handler.accept("SYSTEM_MSG:Not_Connected_Cannot_Send"));
+        }
+    }
+
+    /**
+     * Vérifie si la connexion est active
+     */
+    public boolean isConnected() {
+        return session != null && session.isOpen();
+    }
+
+    /**
+     * Ajoute un gestionnaire de messages
+     */
+    public void addMessageHandler(Consumer<String> handler) {
+        this.messageHandlers.add(handler);
+    }
+
+    /**
+     * Supprime un gestionnaire de messages
+     */
+    public void removeMessageHandler(Consumer<String> handler) {
+        this.messageHandlers.remove(handler);
+    }
+
+    /**
+     * Ferme la connexion WebSocket
+     */
+    public void close() {
+        if (session != null && session.isOpen()) {
+            try {
+                session.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
