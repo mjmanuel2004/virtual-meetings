@@ -3,11 +3,12 @@ package com.datingapp;
 import com.datingapp.server.ChatServerEndpoint;
 import org.glassfish.tyrus.server.Server;
 
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.UnknownHostException;
 import java.util.Properties;
 
 public class MainServer {
@@ -61,6 +62,29 @@ public class MainServer {
         }
     }
 
+    // Méthode pour obtenir l'adresse IP locale
+    private static void displayNetworkInfo(int port) {
+        try {
+            InetAddress localHost = InetAddress.getLocalHost();
+            String hostAddress = localHost.getHostAddress();
+            String hostName = localHost.getHostName();
+
+            System.out.println("=== INFORMATIONS RÉSEAU ===");
+            System.out.println("Nom de la machine : " + hostName);
+            System.out.println("Adresse IP locale : " + hostAddress);
+            System.out.println("Endpoint local : ws://localhost:" + port + "/websockets/chat/{username}");
+            System.out.println("Endpoint réseau : ws://" + hostAddress + ":" + port + "/websockets/chat/{username}");
+            System.out.println("==============================");
+            System.out.println("POUR CONNEXION DISTANTE :");
+            System.out.println("Les autres machines peuvent se connecter en utilisant :");
+            System.out.println("  → " + hostAddress + ":" + port);
+            System.out.println("==============================");
+        } catch (UnknownHostException e) {
+            System.err.println("Impossible d'obtenir l'adresse IP locale : " + e.getMessage());
+            System.out.println("Endpoint local : ws://localhost:" + port + "/websockets/chat/{username}");
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("Application Serveur Démarrée");
 
@@ -96,19 +120,22 @@ public class MainServer {
 
         Server server = null;
         try {
-            // Créer l'instance du serveur
+            // Créer l'instance du serveur - MODIFICATION IMPORTANTE ICI
             System.out.println("Création du serveur WebSocket...");
-            server = new Server("localhost", serverPort, "/websockets", null, ChatServerEndpoint.class);
+            // CHANGÉ : "localhost" → "0.0.0.0" pour accepter toutes les connexions
+            server = new Server("0.0.0.0", serverPort, "/websockets", null, ChatServerEndpoint.class);
 
             // Démarrer le serveur avec une gestion d'exceptions appropriée
-            System.out.println("Démarrage du serveur WebSocket sur ws://localhost:" + serverPort + "/websockets/chat");
+            System.out.println("Démarrage du serveur WebSocket sur toutes les interfaces (0.0.0.0:" + serverPort + ")...");
             server.start();
 
             System.out.println("✓ Serveur WebSocket démarré avec succès !");
-            System.out.println("Endpoint du serveur : ws://localhost:" + serverPort + "/websockets/chat/{username}");
-            System.out.println("URL DB : " + getProperty("db.url", "jdbc:mysql://localhost:3306/dating_app_db_default"));
 
-            System.out.println("Appuyez sur Entrée pour arrêter le serveur...");
+            // Afficher les informations réseau
+            displayNetworkInfo(serverPort);
+
+            System.out.println("URL DB : " + getProperty("db.url", "jdbc:mysql://localhost:3306/dating_app_db_default"));
+            System.out.println("\nAppuyez sur Entrée pour arrêter le serveur...");
             System.in.read();
 
         } catch (IOException e) {
