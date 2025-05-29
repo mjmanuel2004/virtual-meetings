@@ -50,7 +50,7 @@ public class MainClient extends Application {
     public void showLoginScreen() {
         cleanupPreviousController();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxml/Login.fxml"));
             Parent root = loader.load();
 
             LoginController controller = loader.getController();
