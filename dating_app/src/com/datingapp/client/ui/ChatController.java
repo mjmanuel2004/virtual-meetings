@@ -168,6 +168,7 @@ public class ChatController {
         }
     }
 
+    // 4. REMPLACER la méthode handleServerMessage (version améliorée)
     private void handleServerMessage(String rawMessage) {
         Platform.runLater(() -> {
             System.out.println("Processing raw server message: " + rawMessage);
@@ -188,29 +189,47 @@ public class ChatController {
                     meetingStatusLabel.getStyleClass().setAll("label", "status-label-success");
                     meetingStatusLabel.setText("Logged in as " + currentUsername);
 
-                    activeUsernames.clear();
+                    // CORRECTION: Initialiser le contexte en "public"
+                    updateUserListContext("public");
                 }
-            } else if (rawMessage.startsWith("USER_JOINED:")) {
+            }
+            else if (rawMessage.startsWith("CLEAR_USER_LIST:")) {
+                // NOUVEAU: Message pour vider la liste des utilisateurs
+                System.out.println("Clearing user list");
+                activeUsernames.clear();
+            }
+            else if (rawMessage.startsWith("USER_JOINED:")) {
                 parts = rawMessage.split(":", 3);
                 if (parts.length >= 2) {
                     String userJoined = parts[1];
                     String avatarUrl = parts.length > 2 ? parts[2] : "";
                     userProfilesCache.put(userJoined, new UserProfile(userJoined, avatarUrl, ""));
-                    // AMÉLIORÉ : Vérifier si on est en mode DM
-                    if (currentDmPartner == null && !userJoined.equals(currentUsername) && !activeUsernames.contains(userJoined)) {
-                        activeUsernames.add(userJoined);
-                        chatMsg = new ChatMessage("System", userJoined + " has joined.", null, false, ChatMessage.MessageType.USER_EVENT);
-                    }
 
+                    // CORRECTION: Ajouter à la liste seulement si pas en mode DM et pas déjà présent
+                    if (currentDmPartner == null && !userJoined.equals(currentUsername)) {
+                        if (!activeUsernames.contains(userJoined)) {
+                            activeUsernames.add(userJoined);
+                            System.out.println("Added " + userJoined + " to active users list");
+                        }
+                        // Message de système seulement pour les nouveaux arrivants (pas pour le refresh)
+                        if (!rawMessage.contains("REFRESH")) {
+                            chatMsg = new ChatMessage("System", userJoined + " has joined.", null, false, ChatMessage.MessageType.USER_EVENT);
+                        }
+                    }
                 }
-            } else if (rawMessage.startsWith("USER_LEFT:")) {
+            }
+            else if (rawMessage.startsWith("USER_LEFT:")) {
                 String userLeft = rawMessage.substring("USER_LEFT:".length());
                 activeUsernames.remove(userLeft);
                 userProfilesCache.remove(userLeft);
+
+                // Message seulement si pas en mode DM
                 if (currentDmPartner == null) {
                     chatMsg = new ChatMessage("System", userLeft + " has left.", null, false, ChatMessage.MessageType.USER_EVENT);
                 }
-            } else if (rawMessage.startsWith("USER_PROFILE_UPDATE:")) {
+                System.out.println("Removed " + userLeft + " from active users list");
+            }
+            else if (rawMessage.startsWith("USER_PROFILE_UPDATE:")) {
                 parts = rawMessage.split(":", 4);
                 if (parts.length == 4) {
                     String updatedUser = parts[1];
@@ -226,11 +245,11 @@ public class ChatController {
                     userListView.refresh();
                     chatMsg = new ChatMessage("System", updatedUser + "'s profile updated.", null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION, null);
                 }
-            } else if (rawMessage.startsWith("RESP_DM_HIST:")) {
+            }
+            else if (rawMessage.startsWith("RESP_DM_HIST:")) {
                 parts = rawMessage.split(":", 3);
                 if (parts.length == 3) {
-                    String otherUser = parts[1];
-                    String jsonArrayStr = parts[2];
+                    String otherUser = parts[1]; String jsonArrayStr = parts[2];
                     if (currentDmPartner != null && currentDmPartner.equals(otherUser)) {
                         List<Map<String, String>> parsedMessages = parseSimpleJsonArray(jsonArrayStr);
                         for (Map<String, String> msgMap : parsedMessages) {
@@ -240,17 +259,15 @@ public class ChatController {
                                 UserProfile senderProfile = userProfilesCache.get(senderUsername);
                                 String senderAvatar = (senderProfile != null) ? senderProfile.getAvatarUrl() : null;
                                 historyMessages.add(new ChatMessage(senderUsername, msgMap.get("content"), ts, senderUsername.equals(currentUsername), ChatMessage.MessageType.DIRECT, senderAvatar));
-                            } catch (Exception e) {
-                                System.err.println("Error parsing DM history message: " + e);
-                            }
+                            } catch (Exception e) { System.err.println("Error parsing DM history message: " + e); }
                         }
                     }
                 }
-            } else if (rawMessage.startsWith("RESP_MEETING_HIST:")) {
+            }
+            else if (rawMessage.startsWith("RESP_MEETING_HIST:")) {
                 parts = rawMessage.split(":", 3);
                 if (parts.length == 3) {
-                    String meetingCodeFromServer = parts[1];
-                    String jsonArrayStr = parts[2];
+                    String meetingCodeFromServer = parts[1]; String jsonArrayStr = parts[2];
                     String currentClientMeetingCode = meetingCodeField.getText().trim().isEmpty() ? "public" : meetingCodeField.getText().trim();
                     if (currentDmPartner == null && meetingCodeFromServer.equals(currentClientMeetingCode)) {
                         List<Map<String, String>> parsedMessages = parseSimpleJsonArray(jsonArrayStr);
@@ -261,58 +278,58 @@ public class ChatController {
                                 UserProfile senderProfile = userProfilesCache.get(senderUsername);
                                 String senderAvatar = (senderProfile != null) ? senderProfile.getAvatarUrl() : null;
                                 historyMessages.add(new ChatMessage(senderUsername, msgMap.get("content"), ts, senderUsername.equals(currentUsername), ChatMessage.MessageType.GENERAL, senderAvatar));
-                            } catch (Exception e) {
-                                System.err.println("Error parsing Meeting history message: " + e);
-                            }
+                            } catch (Exception e) { System.err.println("Error parsing Meeting history message: " + e); }
                         }
                     }
                 }
-            } else if (rawMessage.startsWith("MSG:")) {
+            }
+            else if (rawMessage.startsWith("MSG:")) {
                 parts = rawMessage.split(":", 3);
                 if (parts.length == 3) {
-                    String sender = parts[1];
-                    String content = parts[2];
+                    String sender = parts[1]; String content = parts[2];
                     UserProfile senderProfile = userProfilesCache.get(sender);
                     String senderAvatar = (senderProfile != null) ? senderProfile.getAvatarUrl() : null;
                     if (currentDmPartner == null) {
                         chatMsg = new ChatMessage(sender, content, null, sender.equals(currentUsername), ChatMessage.MessageType.GENERAL, senderAvatar);
                     }
                 }
-            } else if (rawMessage.startsWith("DM_RECEIVE:")) {
+            }
+            else if (rawMessage.startsWith("DM_RECEIVE:")) {
                 parts = rawMessage.split(":", 3);
                 if (parts.length == 3) {
-                    String sender = parts[1];
-                    String content = parts[2];
+                    String sender = parts[1]; String content = parts[2];
                     UserProfile senderProfile = userProfilesCache.get(sender);
                     String senderAvatar = (senderProfile != null) ? senderProfile.getAvatarUrl() : null;
                     if (currentDmPartner != null && currentDmPartner.equals(sender)) {
                         chatMsg = new ChatMessage(sender, content, null, false, ChatMessage.MessageType.DIRECT, senderAvatar);
                     }
                 }
-            } else if (rawMessage.startsWith("DM_SENT_CONFIRM:")) {
+            }
+            else if (rawMessage.startsWith("DM_SENT_CONFIRM:")) {
                 parts = rawMessage.split(":", 3);
                 if (parts.length == 3) {
-                    String recipient = parts[1];
-                    String content = parts[2];
+                    String recipient = parts[1]; String content = parts[2];
                     if (currentDmPartner != null && currentDmPartner.equals(recipient)) {
                         chatMsg = new ChatMessage(currentUsername, content, null, true, ChatMessage.MessageType.DIRECT, currentUserAvatarUrl);
                     }
                 }
-            } else if (rawMessage.startsWith("MEETING_CODE_STATUS:")) {
+            }
+            else if (rawMessage.startsWith("MEETING_CODE_STATUS:")) {
                 meetingStatusLabel.getStyleClass().setAll("label");
                 meetingStatusLabel.setText(rawMessage.substring("MEETING_CODE_STATUS:".length()));
-            } else if (rawMessage.startsWith("ERROR:")) {
-                // CORRECTION: Utiliser le bon constructeur
+            }
+            else if (rawMessage.startsWith("ERROR:")) {
                 chatMsg = new ChatMessage("System", "Server Error: " + rawMessage.substring("ERROR:".length()), null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION);
                 meetingStatusLabel.getStyleClass().setAll("label", "status-label-error");
                 meetingStatusLabel.setText(rawMessage.substring("ERROR:".length()));
-            } else if (rawMessage.startsWith("SYSTEM_MSG:")) {
-                // CORRECTION: Utiliser le bon constructeur
+            }
+            else if (rawMessage.startsWith("SYSTEM_MSG:")) {
                 chatMsg = new ChatMessage("System", rawMessage.substring("SYSTEM_MSG:".length()), null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION);
-            } else if (!rawMessage.startsWith("LOGIN_") && !rawMessage.startsWith("REGISTER_") && !rawMessage.startsWith("AVATAR_UPDATE_") && !rawMessage.startsWith("PROFILE_UPDATE_")) {
+            }
+            else if (!rawMessage.startsWith("LOGIN_") && !rawMessage.startsWith("REGISTER_") && !rawMessage.startsWith("AVATAR_UPDATE_") && !rawMessage.startsWith("PROFILE_UPDATE_")) {
                 parts = rawMessage.split(":", 2);
                 if (parts.length == 2 && currentDmPartner == null) {
-                    chatMsg = new ChatMessage(parts[0], parts[1], null, parts[0].equals(currentUsername), ChatMessage.MessageType.GENERAL, userProfilesCache.getOrDefault(parts[0], new UserProfile(parts[0], null, null)).getAvatarUrl());
+                    chatMsg = new ChatMessage(parts[0], parts[1],null, parts[0].equals(currentUsername), ChatMessage.MessageType.GENERAL, userProfilesCache.getOrDefault(parts[0], new UserProfile(parts[0],null, null)).getAvatarUrl());
                 } else if (currentDmPartner == null) {
                     chatMsg = new ChatMessage("Server", rawMessage, null, false, ChatMessage.MessageType.GENERAL, null);
                 }
@@ -321,7 +338,7 @@ public class ChatController {
             if (!historyMessages.isEmpty()) {
                 chatMessages.addAll(0, historyMessages);
                 if (chatMessages.size() > historyMessages.size() && historyMessages.size() < chatListView.getItems().size()) {
-                    chatListView.scrollTo(historyMessages.size() - 1);
+                    chatListView.scrollTo(historyMessages.size() -1 );
                 } else {
                     chatListView.scrollTo(0);
                 }
@@ -350,43 +367,41 @@ public class ChatController {
 
     private void switchToDmWithUser(String username) {
         currentDmPartner = username;
-        welcomeLabel.setText("DM with: " + username);
         meetingCodeField.setDisable(true);
         joinMeetingButton.setDisable(true);
         chatMessages.clear();
         meetingStatusLabel.setText("DM with " + username);
 
-        // NOUVEAU : Vider la liste des utilisateurs actifs en mode DM
-        activeUsernames.clear();
+        // CORRECTION: Vider la liste et mettre à jour le contexte
+        updateUserListContext("DM");
 
-        if (webSocketService != null && webSocketService.isConnected()) {
-            webSocketService.sendMessage("REQ_DM_HIST:" + currentDmPartner);
+        if(webSocketService!=null && webSocketService.isConnected()){
+            webSocketService.sendMessage("REQ_DM_HIST:"+currentDmPartner);
         } else {
-            chatMessages.add(new ChatMessage("System", "No connection for DM history", null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION, null));
+            chatMessages.add(new ChatMessage("System","No connection for DM history",null,false,ChatMessage.MessageType.SYSTEM_NOTIFICATION,null));
         }
     }
 
     @FXML
     private void handleMeetingCodeAction(ActionEvent event) {
         String code = meetingCodeField.getText().trim();
-        String effCode = code.isEmpty() ? "public" : code;
+        String effCode = code.isEmpty()?"public":code;
 
-        if (webSocketService != null && webSocketService.isConnected()) {
-            webSocketService.sendMessage("MEETING_CODE:" + effCode);
-            currentDmPartner = null;
+        if(webSocketService!=null && webSocketService.isConnected()){
+            webSocketService.sendMessage("MEETING_CODE:"+effCode);
+            currentDmPartner=null;
             meetingCodeField.setDisable(false);
             joinMeetingButton.setDisable(false);
-            welcomeLabel.setText("Chat - Code: " + effCode);
             chatMessages.clear();
 
-            // NOUVEAU : Vider la liste des utilisateurs avant de recevoir la nouvelle liste
-            activeUsernames.clear();
+            // CORRECTION: Mettre à jour le contexte utilisateur
+            updateUserListContext(effCode);
 
-            webSocketService.sendMessage("REQ_MEETING_HIST:" + effCode);
+            webSocketService.sendMessage("REQ_MEETING_HIST:"+effCode);
         } else {
             meetingStatusLabel.getStyleClass().setAll("label", "status-label-error");
             meetingStatusLabel.setText("Not connected");
-            chatMessages.add(new ChatMessage("System", "Not connected for meeting code", null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION, null));
+            chatMessages.add(new ChatMessage("System","Not connected for meeting code",null,false,ChatMessage.MessageType.SYSTEM_NOTIFICATION,null));
         }
     }
 
@@ -588,6 +603,21 @@ public class ChatController {
                 avatarView.setVisible(avatarView.getImage() != null);
                 setGraphic(hbox);
             }
+        }
+    }
+
+    private void updateUserListContext(String newContext) {
+        // Vider la liste des utilisateurs pour le nouveau contexte
+        activeUsernames.clear();
+
+        // Mettre à jour l'affichage selon le contexte
+        if (currentDmPartner != null) {
+            // En mode DM, pas d'affichage de liste
+            welcomeLabel.setText("DM with: " + currentDmPartner);
+        } else if ("public".equals(newContext) || newContext.isEmpty()) {
+            welcomeLabel.setText("Welcome, " + currentUsername + " - Public Chat");
+        } else {
+            welcomeLabel.setText("Welcome, " + currentUsername + " - Code: " + newContext);
         }
     }
 }
