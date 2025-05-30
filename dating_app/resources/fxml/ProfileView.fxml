@@ -14,31 +14,26 @@
         <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
     </padding>
 
-    <!-- CORRIGÉ : Supprimé alignment, VBox.vgrow, HBox.hgrow qui ne sont pas valides pour Label -->
-    <Label text="User Profile" styleClass="label-header"/>
+    <Label text="Profil Utilisateur" styleClass="label-header"/>
 
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Avatar URL:" minWidth="80"/>
-        <TextField fx:id="avatarUrlField" HBox.hgrow="ALWAYS" promptText="Enter image URL (e.g., http://.../image.png)"/>
+        <Label text="URL Avatar :" minWidth="80"/>
+        <TextField fx:id="avatarUrlField" HBox.hgrow="ALWAYS" promptText="Entrez l'URL de l'image (ex: http://.../image.png)"/>
     </HBox>
 
-    <!-- CORRIGÉ : Supprimé HBox.alignment qui n'est pas valide pour Button dans VBox -->
-    <Button fx:id="saveAvatarButton" text="Save Avatar URL" onAction="#handleSaveAvatarButtonAction" maxWidth="Infinity"/>
+    <Button fx:id="saveAvatarButton" text="Enregistrer l'Avatar" onAction="#handleSaveAvatarButtonAction" maxWidth="Infinity"/>
 
-    <!-- CORRIGÉ : Supprimé alignment et paddingTop qui ne sont pas valides pour Label -->
-    <Label text="Bio:"/>
-    <TextArea fx:id="bioTextArea" promptText="Tell us a little about yourself..." wrapText="true" prefRowCount="4" VBox.vgrow="ALWAYS"/>
+    <Label text="Biographie :"/>
+    <TextArea fx:id="bioTextArea" promptText="Parlez-nous un peu de vous..." wrapText="true" prefRowCount="4" VBox.vgrow="ALWAYS"/>
 
-    <!-- CORRIGÉ : Supprimé HBox.alignment qui n'est pas valide pour Button dans VBox -->
-    <Button fx:id="saveBioButton" text="Save Bio" onAction="#handleSaveBioButtonAction" maxWidth="Infinity"/>
+    <Button fx:id="saveBioButton" text="Enregistrer la Bio" onAction="#handleSaveBioButtonAction" maxWidth="Infinity"/>
 
     <Label fx:id="statusLabel" minHeight="20" wrapText="true"/>
 
-    <!-- CORRIGÉ : Supprimé paddingTop qui n'est pas valide pour HBox -->
     <HBox spacing="10" alignment="CENTER_RIGHT">
         <padding>
             <Insets top="15"/>
         </padding>
-        <Button fx:id="closeButton" text="Close" onAction="#handleCloseButtonAction" cancelButton="true"/>
+        <Button fx:id="closeButton" text="Fermer" onAction="#handleCloseButtonAction" cancelButton="true"/>
     </HBox>
 </VBox>

@@ -13,12 +13,12 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <Label text="Create Account" styleClass="label-header" />
+    <Label text="Créer un Compte" styleClass="label-header" />
     <Label fx:id="statusLabel" />
-    <TextField fx:id="usernameField" promptText="Username" maxWidth="300"/>
+    <TextField fx:id="usernameField" promptText="Nom d'utilisateur" maxWidth="300"/>
     <TextField fx:id="emailField" promptText="Email" maxWidth="300"/>
-    <PasswordField fx:id="passwordField" promptText="Password" maxWidth="300"/>
-    <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" maxWidth="300"/>
-    <Button fx:id="registerButton" onAction="#handleRegisterButtonAction" text="Register" defaultButton="true" minWidth="100"/>
-    <Hyperlink onAction="#handleLoginLinkAction" text="Already have an account? Login" />
+    <PasswordField fx:id="passwordField" promptText="Mot de passe" maxWidth="300"/>
+    <PasswordField fx:id="confirmPasswordField" promptText="Confirmer le mot de passe" maxWidth="300"/>
+    <Button fx:id="registerButton" onAction="#handleRegisterButtonAction" text="S'inscrire" defaultButton="true" minWidth="100"/>
+    <Hyperlink onAction="#handleLoginLinkAction" text="Déjà un compte ? Se connecter" />
 </VBox>

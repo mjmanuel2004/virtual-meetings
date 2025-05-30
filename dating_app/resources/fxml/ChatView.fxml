@@ -19,12 +19,12 @@
             </padding>
             <Label fx:id="welcomeLabel" text="Chat" />
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Meeting Code:" />
-                <TextField fx:id="meetingCodeField" promptText="Enter code (optional)" HBox.hgrow="ALWAYS" />
-                <Button fx:id="joinMeetingButton" text="Join/Set Code" onAction="#handleMeetingCodeAction" />
-                <Button fx:id="profileButton" text="Profile" onAction="#handleProfileButtonAction" />
+                <Label text="Code de réunion :" />
+                <TextField fx:id="meetingCodeField" promptText="Entrez le code (optionnel)" HBox.hgrow="ALWAYS" />
+                <Button fx:id="joinMeetingButton" text="Rejoindre/Définir Code" onAction="#handleMeetingCodeAction" />
+                <Button fx:id="profileButton" text="Profil" onAction="#handleProfileButtonAction" />
             </HBox>
-             <Label fx:id="meetingStatusLabel" />
+            <Label fx:id="meetingStatusLabel" />
         </VBox>
     </top>
     <center>
@@ -39,16 +39,16 @@
             <padding>
                 <Insets top="5" right="10" bottom="10" left="10" />
             </padding>
-            <TextField fx:id="messageInputField" promptText="Type your message..." HBox.hgrow="ALWAYS" onAction="#handleSendMessageAction"/>
-            <Button fx:id="sendButton" text="Send" onAction="#handleSendMessageAction" defaultButton="true" />
+            <TextField fx:id="messageInputField" promptText="Tapez votre message..." HBox.hgrow="ALWAYS" onAction="#handleSendMessageAction"/>
+            <Button fx:id="sendButton" text="Envoyer" onAction="#handleSendMessageAction" defaultButton="true" />
         </HBox>
     </bottom>
     <right>
         <VBox spacing="5" prefWidth="150">
-             <padding>
+            <padding>
                 <Insets top="10" right="10" bottom="10" left="5" />
             </padding>
-            <Label text="Active Users:" styleClass="label"/>
+            <Label text="Utilisateurs actifs :" styleClass="label"/>
             <ListView fx:id="userListView" />
         </VBox>
     </right>
