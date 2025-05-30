@@ -23,7 +23,7 @@ public class WebSocketClientService {
 
     public WebSocketClientService() {
         // Lire l'adresse du serveur depuis les propriétés système
-        String serverHost = System.getProperty("server.host", "192.168.1.7");
+        String serverHost = System.getProperty("server.host", "192.168.1.12");
         String serverPort = System.getProperty("server.port", "8025");
         this.serverUriBase = "ws://" + serverHost + ":" + serverPort + "/websockets/chat/";
 
