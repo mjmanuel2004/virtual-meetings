@@ -29,7 +29,6 @@ import java.io.IOException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -177,22 +176,24 @@ public class ChatController {
                     meetingStatusLabel.getStyleClass().setAll("label", "status-label-success");
                     meetingStatusLabel.setText("Logged in as " + currentUsername);
                 }
-            } else if (rawMessage.startsWith("USER_JOINED:")) { 
-                parts = rawMessage.split(":", 3); 
-                if (parts.length == 3) {
+            } else if (rawMessage.startsWith("USER_JOINED:")) {
+                parts = rawMessage.split(":", 3);
+                if (parts.length >= 2) {
                     String userJoined = parts[1];
-                    String avatarUrl = parts[2];
-                    userProfilesCache.put(userJoined, new UserProfile(userJoined, avatarUrl, "")); 
+                    String avatarUrl = parts.length > 2 ? parts[2] : "";
+                    userProfilesCache.put(userJoined, new UserProfile(userJoined, avatarUrl, ""));
                     if (!userJoined.equals(currentUsername) && !activeUsernames.contains(userJoined)) {
                         activeUsernames.add(userJoined);
                     }
-                    chatMsg = new ChatMessage("System", userJoined + " has joined.", null,false, ChatMessage.MessageType.USER_EVENT, null);
+                    // CORRECTION: Utiliser le constructeur qui génère automatiquement le timestamp
+                    chatMsg = new ChatMessage("System", userJoined + " has joined.", null, false, ChatMessage.MessageType.USER_EVENT);
                 }
-            } else if (rawMessage.startsWith("USER_LEFT:")) { 
+            } else if (rawMessage.startsWith("USER_LEFT:")) {
                 String userLeft = rawMessage.substring("USER_LEFT:".length());
                 activeUsernames.remove(userLeft);
-                userProfilesCache.remove(userLeft); 
-                chatMsg = new ChatMessage("System", userLeft + " has left.", null, false, ChatMessage.MessageType.USER_EVENT, null);
+                userProfilesCache.remove(userLeft);
+                // CORRECTION: Utiliser le constructeur qui génère automatiquement le timestamp
+                chatMsg = new ChatMessage("System", userLeft + " has left.", null, false, ChatMessage.MessageType.USER_EVENT);
             } else if (rawMessage.startsWith("USER_PROFILE_UPDATE:")) { 
                 parts = rawMessage.split(":", 4); 
                 if (parts.length == 4) {
@@ -278,13 +279,15 @@ public class ChatController {
                 meetingStatusLabel.getStyleClass().setAll("label");
                 meetingStatusLabel.setText(rawMessage.substring("MEETING_CODE_STATUS:".length())); 
              }
-             else if (rawMessage.startsWith("ERROR:")) { 
-                 chatMsg = new ChatMessage("System", "Server Error: " + rawMessage.substring("ERROR:".length()), null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION, null); 
+             else if (rawMessage.startsWith("ERROR:")) {
+                // CORRECTION: Utiliser le bon constructeur
+                chatMsg = new ChatMessage("System", "Server Error: " + rawMessage.substring("ERROR:".length()), null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION);
                  meetingStatusLabel.getStyleClass().setAll("label", "status-label-error");
                  meetingStatusLabel.setText(rawMessage.substring("ERROR:".length()));
             }
-             else if (rawMessage.startsWith("SYSTEM_MSG:")) { 
-                 chatMsg = new ChatMessage("System", rawMessage.substring("SYSTEM_MSG:".length()), null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION, null); 
+             else if (rawMessage.startsWith("SYSTEM_MSG:")) {
+                // CORRECTION: Utiliser le bon constructeur
+                chatMsg = new ChatMessage("System", rawMessage.substring("SYSTEM_MSG:".length()), null, false, ChatMessage.MessageType.SYSTEM_NOTIFICATION);
             }
              else if (!rawMessage.startsWith("LOGIN_") && !rawMessage.startsWith("REGISTER_") && !rawMessage.startsWith("AVATAR_UPDATE_") && !rawMessage.startsWith("PROFILE_UPDATE_")) { 
                 parts = rawMessage.split(":", 2);
