@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendre un Bien - ImmoMarket</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">ImmoMarket</a>
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Acheter ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="acheter_maison.html">Maison</a></li>
+                        <li><a href="acheter_appartement.html">Appartement</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Location ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="louer_maison.html">Maison</a></li>
+                        <li><a href="louer_appartement.html">Appartement</a></li>
+                        <li><a href="louer_locaux_bureaux.html">Locaux/Bureaux</a></li>
+                    </ul>
+                </li>
+                <li><a href="vendre_bien.html">Vendre un bien</a></li>
+                <li><a href="decouvrir.html">Découvrir-nous</a></li>
+                <li><a href="rejoindre.html">Rejoindre</a></li>
+                <li class="auth-links"><a href="connexion.html">Connexion</a></li>
+                <li class="auth-links"><a href="inscription.html">Inscription</a></li>
+                <!-- Pour un utilisateur connecté (simulation) :
+                <li><a href="mon_compte.html">Mon Compte</a></li>
+                <li><a href="#">Déconnexion</a></li>
+                -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="contact-form" style="max-width: 800px; margin-top: 30px;">
+                <h1 class="text-center">Publier une Nouvelle Annonce</h1>
+                <p class="text-center">Décrivez votre bien en détail pour attirer les bons acheteurs ou locataires.</p>
+                <form action="#" method="POST" enctype="multipart/form-data"> <!-- enctype pour l'upload de fichiers -->
+                    <fieldset style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <legend>Informations Générales</legend>
+                        <div>
+                            <label for="type_transaction">Type de transaction :</label>
+                            <select id="type_transaction" name="type_transaction" required>
+                                <option value="" disabled selected>Choisir...</option>
+                                <option value="vente">Vente</option>
+                                <option value="location">Location</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="type_bien">Type de bien :</label>
+                            <select id="type_bien" name="type_bien" required>
+                                <option value="" disabled selected>Choisir...</option>
+                                <option value="maison">Maison</option>
+                                <option value="appartement">Appartement</option>
+                                <option value="local_bureau">Local Commercial / Bureau</option>
+                                <option value="terrain">Terrain</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="titre_annonce">Titre de l'annonce :</label>
+                            <input type="text" id="titre_annonce" name="titre_annonce" required placeholder="Ex: Superbe T3 lumineux avec balcon">
+                        </div>
+                    </fieldset>
+
+                    <fieldset style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <legend>Localisation</legend>
+                        <div>
+                            <label for="adresse_bien">Adresse :</label>
+                            <input type="text" id="adresse_bien" name="adresse_bien" required>
+                        </div>
+                        <div>
+                            <label for="code_postal_bien">Code Postal :</label>
+                            <input type="text" id="code_postal_bien" name="code_postal_bien" required>
+                        </div>
+                        <div>
+                            <label for="ville_bien">Ville :</label>
+                            <input type="text" id="ville_bien" name="ville_bien" required>
+                        </div>
+                    </fieldset>
+
+                    <fieldset style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <legend>Détails du Bien</legend>
+                        <div>
+                            <label for="surface_bien">Surface (m²) :</label>
+                            <input type="number" id="surface_bien" name="surface_bien" required min="1">
+                        </div>
+                        <div>
+                            <label for="nb_pieces_bien">Nombre de pièces :</label>
+                            <input type="number" id="nb_pieces_bien" name="nb_pieces_bien" required min="1">
+                        </div>
+                        <div>
+                            <label for="nb_chambres_bien">Nombre de chambres :</label>
+                            <input type="number" id="nb_chambres_bien" name="nb_chambres_bien" min="0">
+                        </div>
+                        <div>
+                            <label for="description_bien">Description détaillée :</label>
+                            <textarea id="description_bien" name="description_bien" rows="6" required placeholder="Décrivez les atouts de votre bien, son état, son environnement..."></textarea>
+                        </div>
+                    </fieldset>
+
+                    <fieldset style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <legend>Prix et Photos</legend>
+                        <div>
+                            <label for="prix_bien">Prix (€) :</label>
+                            <input type="number" id="prix_bien" name="prix_bien" required min="1">
+                            <small>Pour une location, indiquez le loyer mensuel.</small>
+                        </div>
+                        <div>
+                            <label for="photos_bien">Photos du bien (plusieurs choix possibles) :</label>
+                            <input type="file" id="photos_bien" name="photos_bien[]" multiple accept="image/png, image/jpeg" style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px);">
+                            <small>Formats acceptés : JPG, PNG. Taille max par photo : 5Mo.</small>
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 1.2em;">Publier mon Annonce</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 ImmoMarket. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

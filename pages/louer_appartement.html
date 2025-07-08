@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louer Appartement - ImmoMarket</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">ImmoMarket</a>
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Acheter ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="acheter_maison.html">Maison</a></li>
+                        <li><a href="acheter_appartement.html">Appartement</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Location ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="louer_maison.html">Maison</a></li>
+                        <li><a href="louer_appartement.html">Appartement</a></li>
+                        <li><a href="louer_locaux_bureaux.html">Locaux/Bureaux</a></li>
+                    </ul>
+                </li>
+                <li><a href="vendre_bien.html">Vendre un bien</a></li>
+                <li><a href="decouvrir.html">Découvrir-nous</a></li>
+                <li><a href="rejoindre.html">Rejoindre</a></li>
+                <li class="auth-links"><a href="connexion.html">Connexion</a></li>
+                <li class="auth-links"><a href="inscription.html">Inscription</a></li>
+                <!-- Pour un utilisateur connecté (simulation) :
+                <li><a href="mon_compte.html">Mon Compte</a></li>
+                <li><a href="#">Déconnexion</a></li>
+                -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Louer un Appartement</h1>
+            <p>Parcourez nos offres d'appartements à louer. Des studios aux grands appartements familiaux.</p>
+
+            <section class="filters" style="margin-bottom: 20px; background: #f9f9f9; padding: 15px; border-radius: 5px;">
+                <h2>Filtres de Location</h2>
+                <form style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div>
+                        <label for="loyer_max_appart">Loyer max (€/mois) :</label>
+                        <input type="number" id="loyer_max_appart" name="loyer_max_appart" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+                    </div>
+                    <div>
+                        <label for="type_appart">Type :</label>
+                        <select id="type_appart" name="type_appart" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+                            <option value="">Tous</option>
+                            <option value="studio">Studio</option>
+                            <option value="t2">T2</option>
+                            <option value="t3">T3</option>
+                            <option value="t4+">T4 et +</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="meuble_appart">Meublé :</label>
+                        <input type="checkbox" id="meuble_appart" name="meuble_appart" style="padding: 8px;">
+                    </div>
+                    <button type="submit" class="btn" style="align-self: flex-end;">Filtrer</button>
+                </form>
+            </section>
+
+            <section class="property-listings">
+                <h2>Appartements à Louer</h2>
+                <div class="property-card">
+                    <img src="https://via.placeholder.com/300x200.png?text=Studio+Meubl%C3%A9" alt="Studio Meublé">
+                    <div class="property-card-content">
+                        <h3>Studio Meublé Proche Université</h3>
+                        <p>Idéal étudiant, tout équipé, charges comprises.</p>
+                        <p class="price">550 €/mois</p>
+                        <a href="#" class="btn">Voir détails</a>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <img src="https://via.placeholder.com/300x200.png?text=T3+Balcon" alt="T3 avec Balcon">
+                    <div class="property-card-content">
+                        <h3>Appartement T3 Traversant avec Balcon</h3>
+                        <p>Résidence sécurisée, 2 chambres, parking.</p>
+                        <p class="price">850 €/mois</p>
+                        <a href="#" class="btn">Voir détails</a>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <img src="https://via.placeholder.com/300x200.png?text=Grand+Appart+Familial" alt="Grand Appartement Familial">
+                    <div class="property-card-content">
+                        <h3>Grand Appartement Familial T5</h3>
+                        <p>Quartier résidentiel, 4 chambres, double séjour, cave.</p>
+                        <p class="price">1 300 €/mois</p>
+                        <a href="#" class="btn">Voir détails</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 ImmoMarket. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

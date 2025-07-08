@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace Immobilier</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">ImmoMarket</a>
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Acheter ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="pages/acheter_maison.html">Maison</a></li>
+                        <li><a href="pages/acheter_appartement.html">Appartement</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Location ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="pages/louer_maison.html">Maison</a></li>
+                        <li><a href="pages/louer_appartement.html">Appartement</a></li>
+                        <li><a href="pages/louer_locaux_bureaux.html">Locaux/Bureaux</a></li>
+                    </ul>
+                </li>
+                <li><a href="pages/vendre_bien.html">Vendre un bien</a></li>
+                <li><a href="pages/decouvrir.html">Découvrir-nous</a></li>
+                <li><a href="pages/rejoindre.html">Rejoindre</a></li>
+                <li class="auth-links"><a href="pages/connexion.html">Connexion</a></li>
+                <li class="auth-links"><a href="pages/inscription.html">Inscription</a></li>
+                <!-- Pour un utilisateur connecté (simulation) :
+                <li><a href="pages/mon_compte.html">Mon Compte</a></li>
+                <li><a href="#">Déconnexion</a></li>
+                -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container text-center">
+            <h1>Bienvenue sur ImmoMarket</h1>
+            <p>Votre partenaire de confiance pour trouver le bien immobilier de vos rêves.</p>
+            <section class="property-listings" style="margin-top: 30px;">
+                <h2>Nos dernières offres</h2>
+                <!-- Exemple de carte de propriété -->
+                <div class="property-card">
+                    <img src="https://via.placeholder.com/300x200.png?text=Belle+Maison" alt="Maison à vendre">
+                    <div class="property-card-content">
+                        <h3>Superbe Villa avec Piscine</h3>
+                        <p>Quartier résidentiel, 5 pièces, jardin.</p>
+                        <p class="price">450 000 €</p>
+                        <a href="#" class="btn">Voir détails</a>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <img src="https://via.placeholder.com/300x200.png?text=Appartement+Moderne" alt="Appartement à louer">
+                    <div class="property-card-content">
+                        <h3>Appartement Lumineux Centre-Ville</h3>
+                        <p>3 pièces, balcon, proche commodités.</p>
+                        <p class="price">1 200 €/mois</p>
+                        <a href="#" class="btn">Voir détails</a>
+                    </div>
+                </div>
+                <div class="property-card">
+                    <img src="https://via.placeholder.com/300x200.png?text=Bureau+%C3%A0+Louer" alt="Bureau à louer">
+                    <div class="property-card-content">
+                        <h3>Bureau Spacieux Proche Gare</h3>
+                        <p>Plateau de 150m², modulable.</p>
+                        <p class="price">2 500 €/mois</p>
+                        <a href="#" class="btn">Voir détails</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 ImmoMarket. Tous droits réservés.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

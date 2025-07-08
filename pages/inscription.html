@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - ImmoMarket</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">ImmoMarket</a>
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Acheter ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="acheter_maison.html">Maison</a></li>
+                        <li><a href="acheter_appartement.html">Appartement</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Location ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="louer_maison.html">Maison</a></li>
+                        <li><a href="louer_appartement.html">Appartement</a></li>
+                        <li><a href="louer_locaux_bureaux.html">Locaux/Bureaux</a></li>
+                    </ul>
+                </li>
+                <li><a href="vendre_bien.html">Vendre un bien</a></li>
+                <li><a href="decouvrir.html">Découvrir-nous</a></li>
+                <li><a href="rejoindre.html">Rejoindre</a></li>
+                <li class="auth-links"><a href="connexion.html">Connexion</a></li>
+                <li class="auth-links"><a href="inscription.html">Inscription</a></li>
+                <!-- Pour un utilisateur connecté (simulation) :
+                <li><a href="mon_compte.html">Mon Compte</a></li>
+                <li><a href="#">Déconnexion</a></li>
+                -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="contact-form" style="max-width: 600px; margin-top: 30px;">
+                <h1 class="text-center">Créer un Compte</h1>
+                <p class="text-center">Rejoignez ImmoMarket et trouvez le bien de vos rêves ou vendez le vôtre !</p>
+                <form action="#" method="POST"> <!-- L'action et la méthode sont pour l'exemple -->
+                    <div>
+                        <label for="nom_inscription">Nom complet :</label>
+                        <input type="text" id="nom_inscription" name="nom_inscription" required>
+                    </div>
+                    <div>
+                        <label for="email_inscription">Adresse Email :</label>
+                        <input type="email" id="email_inscription" name="email_inscription" required>
+                    </div>
+                    <div>
+                        <label for="password_inscription">Mot de passe :</label>
+                        <input type="password" id="password_inscription" name="password_inscription" required minlength="8">
+                    </div>
+                    <div>
+                        <label for="password_confirm_inscription">Confirmer le mot de passe :</label>
+                        <input type="password" id="password_confirm_inscription" name="password_confirm_inscription" required minlength="8">
+                    </div>
+                    <div>
+                        <label for="type_compte">Je souhaite m'inscrire en tant que :</label>
+                        <select id="type_compte" name="type_compte" required>
+                            <option value="" disabled selected>Sélectionnez une option...</option>
+                            <option value="acheteur">Acheteur/Locataire</option>
+                            <option value="vendeur">Vendeur/Bailleur</option>
+                            <option value="les_deux">Les deux</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                        <input type="checkbox" id="cgv_inscription" name="cgv_inscription" required>
+                        <label for="cgv_inscription" style="display: inline;">J'accepte les <a href="#">Conditions Générales de Vente</a> et la <a href="#">Politique de Confidentialité</a>.</label>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">S'inscrire</button>
+                    <p class="text-center" style="margin-top: 15px;">
+                        Déjà un compte ? <a href="connexion.html">Connectez-vous ici</a>.
+                    </p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 ImmoMarket. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

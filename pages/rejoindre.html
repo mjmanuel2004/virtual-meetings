@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejoindre ImmoMarket</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html" class="logo">ImmoMarket</a>
+            <ul>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Acheter ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="acheter_maison.html">Maison</a></li>
+                        <li><a href="acheter_appartement.html">Appartement</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Location ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="louer_maison.html">Maison</a></li>
+                        <li><a href="louer_appartement.html">Appartement</a></li>
+                        <li><a href="louer_locaux_bureaux.html">Locaux/Bureaux</a></li>
+                    </ul>
+                </li>
+                <li><a href="vendre_bien.html">Vendre un bien</a></li>
+                <li><a href="decouvrir.html">Découvrir-nous</a></li>
+                <li><a href="rejoindre.html">Rejoindre</a></li>
+                <li class="auth-links"><a href="connexion.html">Connexion</a></li>
+                <li class="auth-links"><a href="inscription.html">Inscription</a></li>
+                <!-- Pour un utilisateur connecté (simulation) :
+                <li><a href="mon_compte.html">Mon Compte</a></li>
+                <li><a href="#">Déconnexion</a></li>
+                -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Rejoignez Notre Équipe</h1>
+            <p class="text-center" style="font-size: 1.2em; margin-bottom: 30px;">Passionné(e) par l'immobilier ? Envie de faire partie d'une équipe dynamique et innovante ? Découvrez nos opportunités !</p>
+
+            <section id="offres-emploi" style="margin-bottom: 30px;">
+                <h2>Nos Offres Actuelles</h2>
+                <div class="job-listing" style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                    <h3>Agent Immobilier Commercial (H/F) - CDI</h3>
+                    <p><strong>Lieu :</strong> Paris</p>
+                    <p>Vous êtes dynamique, avez un excellent relationnel et une première expérience réussie dans la vente ? Rejoignez notre agence parisienne.</p>
+                    <a href="#" class="btn">Postuler</a>
+                </div>
+                <div class="job-listing" style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                    <h3>Assistant(e) de Gestion Locative (H/F) - Alternance</h3>
+                    <p><strong>Lieu :</strong> Lyon</p>
+                    <p>Vous préparez un diplôme en immobilier et souhaitez acquérir une expérience concrète ? Nous cherchons un(e) alternant(e) motivé(e).</p>
+                    <a href="#" class="btn">Postuler</a>
+                </div>
+                <p class="text-center" style="margin-top: 20px;">Aucune offre ne correspond à votre profil ? N'hésitez pas à nous envoyer une candidature spontanée !</p>
+            </section>
+
+            <section id="candidature-spontanee">
+                <h2>Candidature Spontanée</h2>
+                <p>Nous sommes toujours à la recherche de talents. Si vous pensez que vos compétences peuvent être un atout pour ImmoMarket, envoyez-nous votre CV et une lettre de motivation.</p>
+                <form class="contact-form">
+                    <div>
+                        <label for="nom">Nom complet :</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                    <div>
+                        <label for="email">Email :</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="poste_vise">Poste visé (optionnel) :</label>
+                        <input type="text" id="poste_vise" name="poste_vise">
+                    </div>
+                    <div>
+                        <label for="cv">Votre CV (PDF, DOCX) :</label>
+                        <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px);">
+                    </div>
+                    <div>
+                        <label for="motivation">Lettre de motivation :</label>
+                        <textarea id="motivation" name="motivation" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Envoyer ma candidature</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 ImmoMarket. Tous droits réservés.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
